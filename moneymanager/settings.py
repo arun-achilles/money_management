@@ -88,19 +88,19 @@ WSGI_APPLICATION = 'moneymanager.wsgi.application'
 
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
-# DATABASES = {
-#     'default': config('DATABASE_URL', default=default_db_url, cast=dburl)
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'moneymanager',
-        'USER' : 'moneymanager',
-        'PASSWORD' : 'moneymanager',
-        'HOST' : 'localhost',
-        'PORT' : '5432',    }
+    'default': config('DATABASE_URL', default=default_db_url, cast=dburl)
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'moneymanager',
+#         'USER' : 'moneymanager',
+#         'PASSWORD' : 'moneymanager',
+#         'HOST' : 'localhost',
+#         'PORT' : '5432',    }
+# }
 
 
 # Password validation
