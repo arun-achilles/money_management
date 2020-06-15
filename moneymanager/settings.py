@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['moneymanager-achilles.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', 'moneymanager-achilles.herokuapp.com']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leads',
     'orders',
+    'loans',
     'rest_framework',
     'frontend',
     'knox',
@@ -87,19 +88,19 @@ WSGI_APPLICATION = 'moneymanager.wsgi.application'
 
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
-DATABASES = {
-    'default': config('DATABASE_URL', default=default_db_url, cast=dburl)
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'moneymanager',
-#         'USER' : 'moneymanager',
-#         'PASSWORD' : 'moneymanager',
-#         'HOST' : 'localhost',
-#         'PORT' : '5432',    }
+#     'default': config('DATABASE_URL', default=default_db_url, cast=dburl)
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'moneymanager',
+        'USER' : 'moneymanager',
+        'PASSWORD' : 'moneymanager',
+        'HOST' : 'localhost',
+        'PORT' : '5432',    }
+}
 
 
 # Password validation

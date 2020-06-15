@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --watch ./moneymanager/frontend/src/index.js --output ./moneymanager/frontend/static/frontend/main.js",
-    "production": "webpack --mode production ./moneymanager/frontend/src/index.js --output ./moneymanager/frontend/static/frontend/main.js",
+    "dev": "webpack --mode development --watch ./frontend/src/index.js --output ./frontend/static/frontend/main.js",
+    "production": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
