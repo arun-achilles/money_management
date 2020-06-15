@@ -1,0 +1,1 @@
+web: gunicorn moneymanager.wsgi --log-file -
