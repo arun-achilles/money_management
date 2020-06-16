@@ -86,7 +86,8 @@ WSGI_APPLICATION = 'moneymanager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+# DB URL pattern - {engine}://{username}:{password}@{host}:{port}/{database}
+default_db_url = "postgres://moneymanager:moneymanager@localhost:5432/moneymanager"
 
 DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=dburl)

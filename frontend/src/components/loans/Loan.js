@@ -1,16 +1,30 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useRef } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getLoans }from '../../actions/loans'
+import { getLoans, deleteLoan }from '../../actions/loans'
+import EditLoan from './EditLoan';
 
 export class Loans extends Component {
-  static propTypes = {
-    loans: PropTypes.array.isRequired,
-    getLoans: PropTypes.func.isRequired
-  }
+  
+    constructor(props) {
+        super(props);
+        this.editFormRef = React.createRef();
+    }
+    
+    static propTypes = {
+        loans: PropTypes.array.isRequired,
+        getLoans: PropTypes.func.isRequired,
+        deleteLoan: PropTypes.func.isRequired
+    }
+    
   componentDidMount() {
-    this.props.getLoans();
+      this.props.getLoans();
+    }
+    
+    editLoan = loan => {
+    this.editFormRef.current.showModal(loan);
   }
+
   render() {
     return (
       <Fragment>
@@ -34,11 +48,15 @@ export class Loans extends Component {
               <td>{loan.amount}</td>
               <td>{loan.reason}</td>
               <td>{loan.transfer_date}</td>
-              <td></td>
+              <td>
+                  <button className="btn btn-primary" onClick={this.editLoan.bind(this, loan)}>Edit</button> &nbsp;
+                  <button className="btn btn-danger" onClick={this.props.deleteLoan.bind(this, loan.id)}>Delete</button>
+              </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <EditLoan ref={this.editFormRef} />
       </Fragment>
     );
   }
@@ -48,4 +66,4 @@ const mapStateToProps = state => ({
   loans: state.loans.loans
 })
 
-export default connect(mapStateToProps, { getLoans })(Loans);
+export default connect(mapStateToProps, { getLoans, deleteLoan })(Loans);

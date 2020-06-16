@@ -1,4 +1,4 @@
-import { GET_LOANS, ADD_LOAN } from '../actions/types.js';
+import { GET_LOANS, ADD_LOAN, UPDATE_LOAN, DELETE_LOAN } from '../actions/types.js';
 
 const initialState = {
 	loans: []
@@ -16,6 +16,16 @@ export default function(state=initialState, action) {
 				...state,
 				loans: [...state.loans, action.payload]
 			}
+		case UPDATE_LOAN:
+			return {
+				...state,
+				loans: state.loans.map(loan => (loan.id === action.payload.id ? action.payload : loan))
+			}
+		case DELETE_LOAN:
+			return {
+				...state,
+				loans: state.loans.filter(loan => loan.id !== action.payload)
+			}	
 		default:
 			return state;
 	}

@@ -1,40 +1,63 @@
 import React, { Component } from "react";
-import { addLoan }from '../../actions/loans'
+import { addLoan , updateLoan }from '../../actions/loans'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 export class Form extends Component {
   state = {
-    name: "",
-    type: "LEND",
-    reason: "",
-    amount: "",
-    transfer_date: ""
+    transaction: this.props.transaction
   };
 
   static propTypes = {
-    addLoan: PropTypes.func.isRequired
+    addLoan: PropTypes.func.isRequired,
+    updateLoan: PropTypes.func.isRequired
   };
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  dateFormat = date => {
+    if (date){
+        date = new Date(date)
+        const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date)
+        const mo = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date)
+        const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
+        return `${ye}-${mo}-${da}`
+    } else {
+        return ""
+    }
+  }
+
+  onChange = e => {
+      let transaction = this.state.transaction;
+      transaction[e.target.name] = e.target.value;
+      this.setState({ transaction: transaction });
+  }
 
   onSubmit = e => {
     e.preventDefault();
-    const { name, type, reason, amount } = this.state;
-    const transfer_date = new Date(this.state.transfer_date);
-    const loan = { name, type, reason, amount, transfer_date };
-    this.props.addLoan(loan);
+    const { name, type, reason, amount } = this.state.transaction;
+    const transfer_date = new Date(this.state.transaction.transfer_date);
+    if (this.state.transaction.id) {
+        const id = this.state.transaction.id;
+        const loan = { id, name, type, reason, amount, transfer_date };
+        this.props.updateLoan(loan);
+        this.props.closeModal();
+    } else {
+        const loan = { name, type, reason, amount, transfer_date };
+        this.props.addLoan(loan);
+    }
     this.setState({
-        name: "",
-        type: "",
-        reason: "",
-        amount: "",
-        transfer_date: ""
+        transaction :{
+            name: "",
+            type: "",
+            reason: "",
+            amount: "",
+            transfer_date: ""
+        }
     });
   };
 
   render() {
-    const { name, type, reason, amount, transfer_date } = this.state;
+    const { name, type, reason, amount, transfer_date } = this.state.transaction;
+    let formatted_transfer_date = this.dateFormat(transfer_date)
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>Add Transaction</h2>
@@ -73,7 +96,7 @@ export class Form extends Component {
               type="date"
               name="transfer_date"
               onChange={this.onChange}
-              value={transfer_date}
+              value={this.state.transaction.id ? formatted_transfer_date : transfer_date}
             />
           </div>
           <div className="form-group">
@@ -97,4 +120,4 @@ export class Form extends Component {
   }
 }
 
-export default connect(null, { addLoan})(Form);
+export default connect(null, { addLoan, updateLoan})(Form);
