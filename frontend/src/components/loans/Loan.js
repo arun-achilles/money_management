@@ -21,7 +21,7 @@ export class Loans extends Component {
       this.props.getLoans();
     }
     
-    editLoan = loan => {
+  editLoan = loan => {
     this.editFormRef.current.showModal(loan);
   }
 

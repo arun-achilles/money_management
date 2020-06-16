@@ -17,11 +17,11 @@ export class Form extends Component {
     if (date){
         date = new Date(date)
         const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date)
-        const mo = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date)
+        const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date)
         const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date)
         return `${ye}-${mo}-${da}`
     } else {
-        return ""
+        return date
     }
   }
 
@@ -96,7 +96,7 @@ export class Form extends Component {
               type="date"
               name="transfer_date"
               onChange={this.onChange}
-              value={this.state.transaction.id ? formatted_transfer_date : transfer_date}
+              value={formatted_transfer_date}
             />
           </div>
           <div className="form-group">
