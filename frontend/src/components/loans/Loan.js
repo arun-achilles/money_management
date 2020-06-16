@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getLoans, deleteLoan }from '../../actions/loans'
 import EditLoan from './EditLoan';
+var FontAwesome  = require('react-fontawesome')
+
 
 export class Loans extends Component {
   
@@ -49,8 +51,8 @@ export class Loans extends Component {
               <td>{loan.reason}</td>
               <td>{loan.transfer_date}</td>
               <td>
-                  <button className="btn btn-primary" onClick={this.editLoan.bind(this, loan)}>Edit</button> &nbsp;
-                  <button className="btn btn-danger" onClick={this.props.deleteLoan.bind(this, loan.id)}>Delete</button>
+                  <FontAwesome onClick={this.editLoan.bind(this, loan)} name="edit" /> &nbsp;
+                  <FontAwesome onClick={this.props.deleteLoan.bind(this, loan.id)} name="trash" />
               </td>
               </tr>
             ))}
